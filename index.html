@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Box Animation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #FFD700;
+            border-radius: 50%;
+            animation: sparkle 1.5s linear infinite;
+        }
+
+        .sparkle:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 40%; right: 20%; animation-delay: 0.3s; }
+        .sparkle:nth-child(3) { bottom: 30%; left: 30%; animation-delay: 0.6s; }
+        .sparkle:nth-child(4) { top: 10%; right: 40%; animation-delay: 0.9s; }
+        .sparkle:nth-child(5) { bottom: 20%; right: 30%; animation-delay: 1.2s; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="relative">
+        <!-- Sparkles -->
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+
+        <!-- Gift Box -->
+        <div class="float-animation">
+            <svg width="200" height="200" viewBox="0 0 200 200" class="transform-gpu">
+                <!-- Gift Box -->
+                <rect x="40" y="80" width="120" height="100" fill="#FF69B4" rx="10"/>
+                <rect x="35" y="70" width="130" height="20" fill="#FF1493" rx="5"/>
+                
+                <!-- Ribbon -->
+                <rect x="90" y="70" width="20" height="110" fill="#FF1493"/>
+                <path d="M100 40 L120 70 L80 70 Z" fill="#FF1493"/>
+                
+                <!-- Lid Shadow -->
+                <rect x="35" y="85" width="130" height="5" fill="rgba(0,0,0,0.1)"/>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        // Add dynamic sparkles
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            document.querySelector('.relative').appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1500);
+        }
+
+        setInterval(createSparkle, 300);
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
